@@ -1,6 +1,8 @@
 package pageobjects;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 import org.junit.Assert;
@@ -42,25 +44,37 @@ public class Registration {
 	
 	@When("fill all details")
 	public void fillDetails() throws IOException {
-		driver.findElement(By.cssSelector(firstNameLocator)).sendKeys("Vinay");
-		driver.findElement(By.cssSelector(lastNameLocator)).sendKeys("Jain");
-		driver.findElement(By.cssSelector(genderLocator)).click();
-		driver.findElement(By.cssSelector(expLocator)).click();
-		driver.findElements(By.cssSelector(dateLocator)).get(2).sendKeys("30-07-2023");
 		
-		js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollBy(0,200)", "");
-		driver.findElement(By.cssSelector(professionLocator)).click();
-		driver.findElement(By.cssSelector(autoToolsLocator)).click();
+		String filePath=System.getProperty("user.dir")+"/src/test/resources/data/regdata.csv";
 		
-		Select select = new Select(driver.findElement(By.cssSelector(continentLocator)));
-		select.selectByIndex(0);
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		String line;
+		br.readLine();
+		while((line = br.readLine())!=null){
+			String[] data = line.split(",");
+			driver.findElement(By.xpath("//input[@name=\"firstname\"]"));
+//			driver.findElement(By.cssSelector(firstNameLocator)).sendKeys(data[0]);
+//			driver.findElement(By.cssSelector(lastNameLocator)).sendKeys(data[1]);
+//			driver.findElement(By.cssSelector(genderLocator)).click();
+//			driver.findElement(By.cssSelector(expLocator)).click();
+//			driver.findElements(By.cssSelector(dateLocator)).get(2).sendKeys(data[4]);
+//			
+//			js = (JavascriptExecutor) driver;
+//			js.executeScript("window.scrollBy(0,200)", "");
+//			driver.findElement(By.cssSelector(professionLocator)).click();
+//			driver.findElement(By.cssSelector(autoToolsLocator)).click();
+//			
+//			Select select = new Select(driver.findElement(By.cssSelector(continentLocator)));
+//			select.selectByIndex(0);
+//			
+//			Select se = new Select(driver.findElement(By.cssSelector(commandLocator)));
+//			se.selectByIndex(0);
+//			js.executeScript("window.scrollBy(0,200)", "");		
+//			driver.findElement(By.cssSelector(photoLocator)).sendKeys(data[9]);
+//		
+		}
 		
-		Select se = new Select(driver.findElement(By.cssSelector(commandLocator)));
-		se.selectByIndex(0);
-		js.executeScript("window.scrollBy(0,200)", "");		
-		driver.findElement(By.cssSelector(photoLocator)).sendKeys("/home/priya/Downloads/1666697598682.jpg");
-	}
+		}
 	
 	@Then("submit the form")
 	public void submitForm() throws IOException {
